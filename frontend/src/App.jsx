@@ -39,7 +39,7 @@ function App() {
 
 <Route
   path="/dashboard/messages"
-  element={<Messages />}
+  element={<ProtectedRoute><Messages /></ProtectedRoute>}
 />
       </Routes>
     </BrowserRouter>
