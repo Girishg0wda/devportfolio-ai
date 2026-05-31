@@ -23,7 +23,7 @@ function Projects() {
   }, []);
 
   return (
-  <div className="min-h-screen bg-black text-white px-8 py-16">
+  <div className="pt-36 min-h-screen bg-black text-white px-8 py-16">
     <div className="max-w-7xl mx-auto">
 
       <h1 className="text-5xl font-bold text-center mb-12">
