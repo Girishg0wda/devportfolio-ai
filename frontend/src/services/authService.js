@@ -29,8 +29,5 @@ export const loginUser = async (
       }
     );
 
-  console.log("AUTH RESPONSE:", JSON.stringify(response.data, null, 2));
-console.log("ACCESS TOKEN:", response.data.access_token);
-
   return response.data;
 };
