@@ -35,7 +35,7 @@ function Login() {
 };
 
   return (
-    <div className="min-h-screen bg-black text-white flex justify-center items-center">
+    <div className=" pt-36 min-h-screen bg-black text-white flex justify-center items-center">
 
       <form
         onSubmit={handleSubmit}
