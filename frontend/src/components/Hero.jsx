@@ -35,7 +35,7 @@ return ( <section className="relative min-h-screen bg-black text-white overflow-
           Hi, I'm Girish Gowda
         </motion.p>
 
-        <span className="
+        {/* <span className="
 px-4 py-2
 rounded-full
 bg-blue-500/10
@@ -44,7 +44,7 @@ text-blue-400
 text-sm
 ">
 Full Stack Developer
-</span>
+</span> */}
 
         <motion.h1
           initial={{ opacity: 0, y: 50 }}

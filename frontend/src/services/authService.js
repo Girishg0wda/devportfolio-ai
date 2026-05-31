@@ -4,8 +4,8 @@ export const loginUser = async (
   email,
   password
 ) => {
-
-  const formData = new URLSearchParams();
+  const formData =
+    new URLSearchParams();
 
   formData.append(
     "username",
@@ -17,15 +17,21 @@ export const loginUser = async (
     password
   );
 
-  const response = await api.post(
-    "/auth/login",
-    formData,
-    {
-      headers: {
-        "Content-Type":
-          "application/x-www-form-urlencoded",
-      },
-    }
+  const response =
+    await api.post(
+      "/auth/login",
+      formData,
+      {
+        headers: {
+          "Content-Type":
+            "application/x-www-form-urlencoded",
+        },
+      }
+    );
+
+  console.log(
+    "AUTH RESPONSE:",
+    response.data
   );
 
   return response.data;
