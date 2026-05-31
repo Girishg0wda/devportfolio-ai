@@ -24,7 +24,8 @@ function Login() {
       password
     );
 
-    console.log("LOGIN RESPONSE:", data);
+   console.log("LOGIN RESPONSE:", JSON.stringify(data, null, 2));
+console.log("TOKEN VALUE:", data.access_token);
 
     if (!data.access_token) {
       alert("Token missing");
