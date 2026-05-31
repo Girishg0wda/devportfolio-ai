@@ -16,22 +16,31 @@ function Login() {
     useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      const data = await loginUser(
-        email,
-        password
-      );
+  try {
+    const data = await loginUser(
+      email,
+      password
+    );
 
-      login(data.access_token);
+    console.log("LOGIN RESPONSE:", data);
 
-      navigate("/dashboard");
-
-    } catch (error) {
-      alert("Login Failed");
+    if (!data.access_token) {
+      alert("Token missing");
+      return;
     }
-  };
+
+    login(data.access_token);
+
+    navigate("/dashboard");
+
+  } catch (error) {
+    console.log(error);
+
+    alert("Login Failed");
+  }
+};
 
   return (
     <div className="min-h-screen bg-black text-white flex justify-center items-center">
