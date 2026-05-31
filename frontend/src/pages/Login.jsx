@@ -19,18 +19,19 @@ function Login() {
     e.preventDefault();
 
     try {
-      const data = await loginUser(email, password);
+      const data = await loginUser(
+        email,
+        password
+      );
 
-console.log("TOKEN FROM API:", data);
+      login(data.access_token);
 
-login(data.access_token);
+      navigate("/dashboard");
 
-console.log(
-  "TOKEN IN STORAGE:",
-  localStorage.getItem("token")
-);
-
-navigate("/dashboard");
+    } catch (error) {
+      alert("Login Failed");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black text-white flex justify-center items-center">
