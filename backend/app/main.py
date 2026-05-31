@@ -10,16 +10,20 @@ from app.routes.projects import router as project_router
 from app.routes.auth import router as auth_router
 from app.routes.contacts import router as contact_router
 from app.routes.dashboard import router as dashboard_router
+from fastapi.middleware.cors import CORSMiddleware
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+origins = [
+    "http://localhost:5173",
+    "https://devportfolio-ai-chi.vercel.app",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173"
-    ],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
