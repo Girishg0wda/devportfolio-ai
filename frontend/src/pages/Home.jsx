@@ -8,6 +8,7 @@ import ContactCTA from "../components/ContactCTA";
 
 function Home() {
   return (
+    <div id="top">
     <MainLayout>
       <Hero />
       <About />
@@ -15,6 +16,7 @@ function Home() {
       <FeaturedProjects />
       <ContactCTA />
     </MainLayout>
+    </div>
   );
 }
 
