@@ -7,9 +7,11 @@ function DashboardLayout({ children }) {
   return (
     <div className="min-h-screen bg-black text-white flex">
 
-      {/* Sidebar */}
+      {/* Desktop Sidebar */}
       <aside
         className="
+          hidden
+          md:block
           w-72
           border-r
           border-white/10
@@ -98,7 +100,7 @@ function DashboardLayout({ children }) {
       </aside>
 
       {/* Content */}
-      <main className="flex-1 p-8">
+      <main className="w-full p-4 md:p-8">
         {children}
       </main>
 
