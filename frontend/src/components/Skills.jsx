@@ -14,14 +14,25 @@ function Skills() {
   "Python",
   "FastAPI",
   "Node.js",
+  "Express.js",
   "REST APIs",
   "JWT Authentication",
 
   // Databases
   "PostgreSQL",
   "MongoDB",
+  "SQLite",
   "SQL",
   "SQLAlchemy",
+
+  // Data Analytics
+  "Data Analytics",
+  "Data Visualization",
+  "Business Intelligence",
+  "Exploratory Data Analysis",
+  "Customer Segmentation",
+  "Sales Forecasting",
+  "Power BI",
 
   // Data Science & ML
   "Machine Learning",
@@ -29,13 +40,15 @@ function Skills() {
   "Pandas",
   "NumPy",
   "Matplotlib",
-  "Data Analysis",
-  "Data Visualization",
+  "Random Forest",
+  "SVM",
+  "Data Preprocessing",
 
   // Tools
   "Git",
   "GitHub",
   "VS Code",
+  "Jupyter Notebook",
   "Postman",
 
   // Deployment
@@ -46,7 +59,8 @@ function Skills() {
   // Concepts
   "CRUD Operations",
   "Authentication",
-  "Full Stack Development"
+  "Full Stack Development",
+  "API Development"
 ];
 
   return (
@@ -87,18 +101,11 @@ function Skills() {
         Technologies I Work With
       </h2>
 
-      <p
-        className="
-        text-gray-400
-        mt-4
-        max-w-2xl
-        mx-auto
-        "
-      >
-        Full Stack Development, Backend APIs,
-        Databases, Cloud Deployment and
-        Machine Learning.
-      </p>
+      <p className="text-gray-400 mt-4 max-w-2xl mx-auto">
+  Full Stack Development, Data Analytics,
+  Business Intelligence, Machine Learning,
+  Backend APIs and Cloud Deployment.
+</p>
 
     </motion.div>
 
