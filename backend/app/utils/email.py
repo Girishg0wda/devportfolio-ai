@@ -1,5 +1,6 @@
 import os
 import smtplib
+import traceback
 from email.message import EmailMessage
 
 def build_contact_email_message(contact) -> EmailMessage:
@@ -261,7 +262,8 @@ def send_email(message: EmailMessage) -> None:
 
         print("EMAIL SENT")
 
-    except Exception:
+    except Exception as e:
+        print("SMTP ERROR:", repr(e))
         traceback.print_exc()
         raise
 
