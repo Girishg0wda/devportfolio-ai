@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text
+from sqlalchemy import Boolean, Column, Integer, String, Text
 from app.database.db import Base
 
 class Contact(Base):
@@ -13,3 +13,4 @@ class Contact(Base):
     subject = Column(String)
 
     message = Column(Text)
+    is_read = Column(Boolean, default=False, nullable=False)

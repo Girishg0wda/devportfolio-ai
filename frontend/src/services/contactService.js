@@ -9,3 +9,8 @@ export const getContacts = async () => {
   const response = await api.get("/contacts/");
   return response.data;
 };
+
+export const markContactAsRead = async (contactId) => {
+  const response = await api.patch(`/contacts/${contactId}/read`);
+  return response.data;
+};

@@ -1,22 +1,22 @@
 from fastapi import Depends, HTTPException
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import jwt, JWTError
 
-oauth2_scheme = OAuth2PasswordBearer(
-    tokenUrl="auth/login"
-)
+security = HTTPBearer(auto_error=False)
 
 SECRET_KEY = "supersecretkey"
 ALGORITHM = "HS256"
 
+
 def get_current_user(
-    token: str = Depends(oauth2_scheme)
+    credentials: HTTPAuthorizationCredentials | None = Depends(security)
 ):
+    if credentials is None:
+        raise HTTPException(status_code=401, detail="Invalid token")
 
     try:
-
         payload = jwt.decode(
-            token,
+            credentials.credentials,
             SECRET_KEY,
             algorithms=[ALGORITHM]
         )
@@ -24,16 +24,26 @@ def get_current_user(
         email = payload.get("sub")
 
         if email is None:
-            raise HTTPException(
-                status_code=401,
-                detail="Invalid token"
-            )
+            raise HTTPException(status_code=401, detail="Invalid token")
 
         return payload
 
-    except JWTError:
+    except JWTError as exc:
+        raise HTTPException(status_code=401, detail="Invalid token") from exc
 
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid token"
+
+def get_current_user_optional(
+    credentials: HTTPAuthorizationCredentials | None = Depends(security)
+):
+    if credentials is None:
+        return None
+
+    try:
+        payload = jwt.decode(
+            credentials.credentials,
+            SECRET_KEY,
+            algorithms=[ALGORITHM]
         )
+        return payload
+    except JWTError:
+        return None
