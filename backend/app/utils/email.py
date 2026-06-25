@@ -1,10 +1,11 @@
 import os
-import smtplib
-import traceback
+import requests
 from email.message import EmailMessage
+
 
 def build_contact_email_message(contact) -> EmailMessage:
     sender_email = os.getenv("SMTP_FROM_EMAIL") or os.getenv("SMTP_USERNAME") or ""
+
     recipient_email = (
         os.getenv("CONTACT_RECEIVER_EMAIL")
         or os.getenv("SMTP_USERNAME")
@@ -32,7 +33,6 @@ Message:
     return message
 
 
-
 def build_auto_reply_message(contact) -> EmailMessage:
     sender_email = os.getenv("SMTP_FROM_EMAIL") or os.getenv("SMTP_USERNAME") or ""
 
@@ -41,7 +41,6 @@ def build_auto_reply_message(contact) -> EmailMessage:
     message["From"] = sender_email
     message["To"] = contact.email
 
-    
     message.set_content(
         f"""
 Hi {contact.name},
@@ -84,7 +83,6 @@ https://www.linkedin.com/in/girisha-s-r
 style="background:#ffffff;border-radius:14px;overflow:hidden;
 box-shadow:0 8px 25px rgba(0,0,0,.08);">
 
-<!-- Header -->
 <tr>
 <td align="center"
 style="padding:45px;background:linear-gradient(135deg,#2563eb,#1d4ed8);">
@@ -100,7 +98,6 @@ Your message has been received successfully.
 </td>
 </tr>
 
-<!-- Body -->
 <tr>
 <td style="padding:45px;">
 
@@ -208,7 +205,6 @@ Software Engineer • Full Stack Developer • AI Enthusiast
 </td>
 </tr>
 
-<!-- Footer -->
 <tr>
 <td align="center"
 style="background:#111827;padding:30px;">
@@ -241,31 +237,69 @@ Please do not reply to this message.
 
 
 def send_email(message: EmailMessage) -> None:
-    smtp_host = os.getenv("SMTP_HOST")
-    smtp_port = int(os.getenv("SMTP_PORT", "587"))
-    smtp_username = os.getenv("SMTP_USERNAME")
-    smtp_password = os.getenv("SMTP_PASSWORD")
+    api_key = os.getenv("BREVO_API_KEY")
 
-    print("HOST:", smtp_host)
-    print("PORT:", smtp_port)
-    print("USERNAME:", smtp_username)
-    print("PASSWORD EXISTS:", bool(smtp_password))
+    if not api_key:
+        raise RuntimeError("BREVO_API_KEY is not configured")
 
-    try:
-        with smtplib.SMTP(smtp_host, smtp_port, timeout=10) as server:
-            server.set_debuglevel(1)
-            server.ehlo()
-            server.starttls()
-            server.ehlo()
-            server.login(smtp_username, smtp_password)
-            server.send_message(message)
+    sender_email = (
+        os.getenv("SMTP_FROM_EMAIL")
+        or os.getenv("SMTP_USERNAME")
+        or "girishgowda0239@gmail.com"
+    )
 
-        print("EMAIL SENT")
+    to_email = message["To"]
+    subject = message["Subject"]
 
-    except Exception as e:
-        print("SMTP ERROR:", repr(e))
-        traceback.print_exc()
-        raise
+    html_content = None
+    text_content = None
+
+    if message.is_multipart():
+        for part in message.walk():
+            content_type = part.get_content_type()
+
+            if content_type == "text/html":
+                html_content = part.get_content()
+
+            elif content_type == "text/plain":
+                text_content = part.get_content()
+    else:
+        text_content = message.get_content()
+
+    payload = {
+        "sender": {
+            "name": "Girish Gowda",
+            "email": sender_email,
+        },
+        "to": [
+            {
+                "email": to_email,
+            }
+        ],
+        "subject": subject,
+    }
+
+    if html_content:
+        payload["htmlContent"] = html_content
+    else:
+        payload["textContent"] = text_content
+
+    response = requests.post(
+        "https://api.brevo.com/v3/smtp/email",
+        headers={
+            "accept": "application/json",
+            "api-key": api_key,
+            "content-type": "application/json",
+        },
+        json=payload,
+        timeout=20,
+    )
+
+    if response.status_code not in (200, 201, 202):
+        print(response.text)
+        response.raise_for_status()
+
+    print("Brevo email sent successfully.")
 
 
 def send_contact_notification(contact):
