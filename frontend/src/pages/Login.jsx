@@ -19,10 +19,13 @@ function Login() {
   e.preventDefault();
 
   try {
-    const data = await loginUser(
-      email,
-      password
-    );
+    const data = await loginUser(email, password);
+
+    if (!data.access_token) {
+      alert(data.message || "Login failed");
+      return;
+    }
+
     login(data.access_token);
 
     navigate("/dashboard");
