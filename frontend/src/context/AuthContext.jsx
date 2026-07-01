@@ -1,47 +1,21 @@
-import {
-  createContext,
-  useContext,
-  useState,
-} from "react";
+import React, { createContext, useContext, useState } from "react";
 
-const AuthContext =
-  createContext();
+const AuthContext = createContext();
 
-export function AuthProvider({
-  children,
-}) {
-  const [token, setToken] =
-    useState(
-      localStorage.getItem(
-        "token"
-      ) || null
-    );
+export function AuthProvider({ children }) {
+  const [token, setToken] = useState(
+    localStorage.getItem("token") || null
+  );
 
-  const login = (
-    jwtToken
-  ) => {
-    console.log(
-      "Saving token:",
-      jwtToken
-    );
-
-    localStorage.setItem(
-      "token",
-      jwtToken
-    );
-
+  const login = (jwtToken) => {
+    localStorage.setItem("token", jwtToken);
     setToken(jwtToken);
   };
 
   const logout = () => {
-    localStorage.removeItem(
-      "token"
-    );
-
+    localStorage.removeItem("token");
     setToken(null);
-
-    window.location.href =
-      "/";
+    window.location.href = "/";
   };
 
   return (
@@ -50,8 +24,7 @@ export function AuthProvider({
         token,
         login,
         logout,
-        isAuthenticated:
-          !!token,
+        isAuthenticated: !!token,
       }}
     >
       {children}
@@ -59,8 +32,12 @@ export function AuthProvider({
   );
 }
 
-export const useAuth =
-  () =>
-    useContext(
-      AuthContext
-    );
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+
+  return context;
+};

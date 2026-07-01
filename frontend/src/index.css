@@ -1,1 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Fraunces", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Base resets & custom cursor, grain overlays, paper background defaults */
+body {
+  background-color: #FBF9F6; /* Paper Off-white */
+  color: #111111; /* Brutalist Charcoal */
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Custom selection */
+::selection {
+  background-color: #FF3311;
+  color: #FFFFFF;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F1EFEA;
+}
+::-webkit-scrollbar-thumb {
+  background: #C4C1BA;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FF3311;
+}
+
+/* Custom utility styles */
+.border-fine {
+  border: 1px solid rgba(17, 17, 17, 0.15);
+}
+
+.shadow-brutal {
+  box-shadow: 4px 4px 0px #111111;
+}
+
+.shadow-brutal-orange {
+  box-shadow: 4px 4px 0px #FF3311;
+}
+
+.shadow-brutal-large {
+  box-shadow: 8px 8px 0px #111111;
+}
+
+/* Grainy noise overlay */
+.grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Magnetic button alignment */
+.magnetic-btn {
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Simple text reveal */
+.char-reveal {
+  overflow: hidden;
+}
+
+/* Infinite Horizontal Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
