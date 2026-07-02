@@ -4,7 +4,7 @@ A modern full-stack developer portfolio platform built with React, FastAPI, Post
 
 ## Live Demo
 
-Frontend: https://girishgowda-portfolio.vercel.app
+Frontend: https://girishgowda.vercel.app
 
 Backend API: https://devportfolio-ai.onrender.com/docs
 
