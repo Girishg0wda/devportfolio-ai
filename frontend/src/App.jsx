@@ -6,6 +6,7 @@ import { AuthProvider } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
+import EchoCharacter from "./components/EchoCharacter";
 
 import Home from "./pages/Home";
 import Projects from "./pages/Projects";
@@ -21,6 +22,7 @@ function AppContent() {
 
   // Hide Navbar/Footer on Login page
   const isLoginPage = location.pathname === "/login";
+  const isHomePage = location.pathname === "/";
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -64,6 +66,7 @@ function AppContent() {
       </main>
 
       {!isLoginPage && <Footer />}
+      {isHomePage && <EchoCharacter />}
     </div>
   );
 }
